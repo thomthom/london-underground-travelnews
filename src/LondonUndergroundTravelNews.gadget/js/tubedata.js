@@ -1,58 +1,61 @@
 ﻿///// TUBE DATA ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+
 function refreshTubeinfo()
 {
-	///// Set up XML HTTP Request //////////////////////////////////////////////
-	var http_request = new XMLHttpRequest();
-	if (!http_request)
-	{
-    	MessageBox.show('Error! Cannot create an XMLHTTP instance.');
-        return false;
+  ///// Set up XML HTTP Request ////////////////////////////////////////////////
+  var http_request = new XMLHttpRequest();
+  if ( !http_request )
+  {
+    MessageBox.show('Error! Cannot create an XMLHTTP instance.');
+    return false;
+  }
+  status( 'Loading...' ); // (!) Display small animation in statusbar
+  ///// Response function //////////////////////////////////////////////////////
+  http_request.onreadystatechange = function()
+  {
+    if ( http_request.readyState == 4 )
+    {
+      if ( http_request.status == 200 )
+      {
+        // Success. Parse data.
+        parseData( http_request.responseText );
+        parseData( http_request.responseText );
+      }
+      else
+      {
+        // Failure. Display error information.
+        var strMsg  = 'Error loading data.<br/>HTTP Error: ' + http_request.status;
+        status( 'Error loading data.' );
+        MessageBox.show( strMsg, MSG_DATAERROR );
+      }
     }
-	status('Loading...'); // (!) Display small animation in statusbar
-	///// Response function ////////////////////////////////////////////////////
-	http_request.onreadystatechange = function()
-	{
-		if (http_request.readyState == 4)
-		{
-	        if (http_request.status == 200)
-			{
-				// Success. Parse data.
-				parseData(http_request.responseText);
-				parseData(http_request.responseText);
-			}
-			else
-			{
-				// Failure. Display error information.
-				var strMsg  = 'Error loading data.<br/>HTTP Error: ' + http_request.status;
-				status('Error loading data.');
-				MessageBox.show(strMsg, MSG_DATAERROR);
-			}
-		}
-	};
-	///// Send HTTP request ////////////////////////////////////////////////////
-	http_request.open("GET", DATA_SOURCE, true);
-	http_request.setRequestHeader( "If-Modified-Since", "Sat, 1 Jan 2000 00:00:00 GMT" );
-	http_request.send("");
-	// Set the timer for next update
-	timerRefresh = setTimeout('refreshTubeinfo()', 60000 * interval);
+  };
+  ///// Send HTTP request ////////////////////////////////////////////////////
+  http_request.open( 'GET', DATA_SOURCE, true );
+  http_request.setRequestHeader( 'If-Modified-Since', 'Sat, 1 Jan 2000 00:00:00 GMT' );
+  http_request.send('');
+  // Set the timer for next update
+  timerRefresh = setTimeout( refreshTubeinfo, 60000 * interval);
 }
-function parseData(cache)
+
+
+function parseData( cache )
 {
-	// Set status
-	status('Parsing...');
+  // Set status
+  status( 'Parsing...' );
 
-	// Errorcheck
-	if (cache.length == 0)
-	{
-		MessageBox.show('Error! No data.', MSG_DATAERROR);
-		return;
-	}
+  // Errorcheck
+  if ( cache.length == 0 )
+  {
+    MessageBox.show( 'Error! No data.', MSG_DATAERROR );
+    return;
+  }
 
-	////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////
   // Get data chuck containing the travel news
   var data = cache.match(/<ul(?:\s\S+)*?\sid="lines"[\s\S]*?>([\s\S]*?)<\/ul>/i);
-  if (data == null)
+  if ( data == null )
   {
     MessageBox.show('Error! Could not locate tube data.');
     return;
@@ -109,7 +112,7 @@ function parseData(cache)
     }
     // Update status
     DOM_tubeline.title = lineName + ': ' + lineStatus;
-		DOM_status = DOM_tubeline.getElementsByTagName('div')[2];
+    DOM_status = DOM_tubeline.getElementsByTagName('div')[2];
     // A line might have mulitple statuses. Pick out the most severe and display
     // that one.
     statuses = lineStatus.split(/,[\s]*/);
@@ -163,19 +166,19 @@ function parseData(cache)
   status('Updated: ' + hours + ':' + minutes + ' ' + date + '/' + month);
   
   if (System.Gadget.docked)
-	{
-		TimerDisplay.start();
-	}
+  {
+    TimerDisplay.start();
+  }
 }
 
 function clearFlyoutDetails()
 {
-	var DOM_tubeline;
-	for (var i = 0; i < LINES.length; i++)
-	{
-		DOM_tubeline = document.getElementById(LINES[i]);
-		DOM_tubeline.getElementsByTagName('div')[3].innerHTML = '';
-		//DOM_tubeline.getElementsByTagName('div')[4].innerHTML = timestamp;
-	}
-	DOM_tubeline = null;
+  var DOM_tubeline;
+  for (var i = 0; i < LINES.length; i++)
+  {
+    DOM_tubeline = document.getElementById(LINES[i]);
+    DOM_tubeline.getElementsByTagName('div')[3].innerHTML = '';
+    //DOM_tubeline.getElementsByTagName('div')[4].innerHTML = timestamp;
+  }
+  DOM_tubeline = null;
 }
