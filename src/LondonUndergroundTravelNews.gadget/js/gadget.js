@@ -25,10 +25,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 // CONSTANTS
 ////////////////////////////////////////////////////////////////////////////////
-// (!) Extract from System.Gadget.version
-var V_MAJOR = 1;
-var V_MINOR = 4;
-var V_REVIS = 4;
+var VERSION = System.Gadget.version.split('.');
+var V_MAJOR = parseInt( VERSION[0] );
+var V_MINOR = parseInt( VERSION[1] );
+var V_REVIS = parseInt( VERSION[2] );
+
 var PROG_ID = 'LULT_WS';
 
 var UPDATE_REPOSITORY  = 'http://skynet.thomthom.net/software/';
