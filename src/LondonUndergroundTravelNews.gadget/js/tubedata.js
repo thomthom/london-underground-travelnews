@@ -1,29 +1,51 @@
 ﻿///// TUBE DATA ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+// See refreshTubeinfo() handling 12007 status code.
+retry_network_connection = true;
+
+
 function refreshTubeinfo()
 {
   ///// Set up XML HTTP Request ////////////////////////////////////////////////
   var http_request = new XMLHttpRequest();
   if ( !http_request )
   {
-    MessageBox.show('Error! Cannot create an XMLHTTP instance.');
+    MessageBox.show( 'Error! Cannot create an XMLHTTP instance.' );
     return false;
   }
-  status( 'Loading...' ); // (!) Display small animation in statusbar
+  status( 'Loading data...' ); // (!) Display small animation in statusbar
   ///// Response function //////////////////////////////////////////////////////
   http_request.onreadystatechange = function()
   {
     if ( http_request.readyState == 4 )
     {
-      if ( http_request.status == 200 )
+      switch( http_request.status )
       {
+      case 200:
         // Success. Parse data.
         parseData( http_request.responseText );
         parseData( http_request.responseText );
-      }
-      else
-      {
+        break;
+      case 12007:
+        // ERROR_WINHTTP_NAME_NOT_RESOLVED
+        // http://msdn.microsoft.com/en-us/library/aa383770%28VS.85%29.aspx
+        // 
+        // If the network is not connected this can be returned.
+        // When a computer resumes from sleep it appear that the network isn't
+        // ready when the gadget resumes and therefor this error is raised.
+        // Because of this, a small retry is attempted with a small delay
+        // before returning any error messages and invalidating the existing
+        // data.
+        if ( retry_network_connection )
+        {
+          status( 'Waiting for network...' );
+          var seconds = 30;
+          timerRefresh = setTimeout( refreshTubeinfo, 1000 * seconds );
+          break;
+        }
+        // This code is meant to fall through here when it has done a retry.
+      default:
         // Failure. Display error information.
         var strMsg  = 'Error loading data.<br/>HTTP Error: ' + http_request.status;
         status( 'Error loading data.' );
@@ -164,6 +186,8 @@ function parseData( cache )
   var date    = String.fill(d.getDate().toString(),      '0', 2);
   var month   = String.fill((d.getMonth()+1).toString(), '0', 2);
   status('Updated: ' + hours + ':' + minutes + ' ' + date + '/' + month);
+  
+  retry_network_connection = true; // Reset flag
   
   if (System.Gadget.docked)
   {
