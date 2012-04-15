@@ -1,0 +1,440 @@
+body, body.docked {
+	width: 141px;
+	height: 253px;
+
+	color: #fff;
+	/*background: url(../images/windowMain.png) no-repeat;*/
+
+	font-family: 'Segoe UI';
+	font-size: 11px;
+	font-variant: small-caps;
+
+	margin: 0;
+	padding: 0;
+
+	cursor: default;
+	overflow: hidden;
+}
+body.undocked {
+	width: 230px;
+	/*background: url(../images/windowExWideMain.png);*/
+}
+
+/*#tubelines li div
+{
+	display: none;
+}*/
+
+body:hover #refreshData
+{
+	visibility: visible;
+}
+
+#refreshData
+{
+	visibility: hidden;
+	position: absolute;
+	right: 8px;
+	top: 22px;
+}
+#refreshData:hover
+{
+	color: orange;
+}
+
+#messagebox
+{
+	position: absolute;
+	left: 20px;
+	top: 35px;
+	width: 102px;
+	/*height: 170px;*/
+
+	padding: 5px;
+
+	/*background: #300; DEBUG*/
+	background: #000;
+	filter:alpha(opacity=90);
+
+	visibility: hidden;
+
+	text-align: center;
+
+	/*overflow: scroll;*/
+	/*oberflow: hidden;*/
+
+	overflow: scroll-y;
+}
+#messagebox a
+{
+	color: orange;
+	/*cursor: default;*/
+}
+#messagebox a:hover
+{
+	text-decoration: underline;
+}
+#msgContainer
+{
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 100%;
+	/*background: #030; DEBUG*/
+	background: #000;
+	filter:alpha(opacity=90);
+}
+
+#msgContainer ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+body.undocked #messagebox
+{
+	width: 192px;
+}
+
+#content {
+	color: #fff;
+	margin: 35px 6px 5px 17px;
+}
+
+h1 {
+	font-size: 1em;
+	font-weight: normal;
+
+	color: #fff;
+	background: #595959;
+
+	padding: 2px;
+	margin: 0;
+
+	display: none;
+}
+h2 {
+	font-size: 1em;
+	font-weight: normal;
+
+	color: #fff;
+	background: #595959;
+
+	padding: 2px;
+	margin: 0;
+}
+p {
+	font-variant: normal;
+
+	margin: 0 0 5px;
+	padding: 2px;
+
+	max-height: 160px;
+
+	overflow: auto;
+}
+#detailTimestamp {
+	position: absolute;
+	bottom: 5px;
+	padding: 2px;
+	color: #404040;
+}
+
+
+#statusBar {
+	height: 15px;
+
+	color: #404040;
+	border-top: 1px solid #303030;
+
+	padding: 2px 0 0 0;
+	margin: 0px 5px 0 5px;
+
+	/*cursor: pointer;*/
+
+	font-size: 9px;
+	overflow: hidden;
+
+	position: absolute;
+	left: 15px;
+	bottom: 5px;
+	/*background: green;
+	z-index: 10000;*/
+}
+#statusBar a
+{
+	color: orange;
+	/*cursor: default;*/
+}
+
+.lineStatus, .lineDetails, .timestamp {
+	display: none;
+}
+
+body.undocked .lineName {
+	float: left;
+	width: 100px;
+}
+
+#tubelines {
+
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	margin: 35px 6px 5px 17px;
+}
+#tubelines li, #tubelines li.normal {
+	height: 15px;
+
+	padding: 0 5px 0 15px;
+
+	position: relative;
+
+	cursor: pointer;
+}
+#tubelines li.minor {
+	color: #ffa800;
+}
+#tubelines li.severe {
+	color: #000;
+	background: #ffa800;
+}
+#tubelines li.error {
+	color: #404040;
+	/*color: #fff;
+	background: #ff2000;*/
+}
+/*#tubelines li:hover {
+	color: #000;
+	background: #ffa800;
+}*/
+
+#tubelines .lineColour {
+	height: 6px;
+	width: 8px;
+
+	/*font-size: 7px;*/
+	/*float: left;*/
+	position: absolute;
+	top: 3px;
+	left: 3px;
+
+	overflow: hidden;
+}
+
+/*#tubelines li
+{
+	display: block;
+}
+#tubelines li[disabled]
+{
+	display: none;
+}*/
+
+.lineColour {
+	text-indent: -1000px;
+  overflow: hidden;
+}
+#bakerloo .lineColour {
+	color: #AE6118;
+	background: #AE6118;
+	border: 1px solid #AE6118;
+}
+#central .lineColour {
+	color: #E41F1F;
+	background: #E41F1F;
+	border: 1px solid #E41F1F;
+}
+#circle .lineColour {
+	color: #F8D42D;
+	background: #F8D42D;
+	border: 1px solid #F8D42D;
+}
+#district .lineColour {
+	color: #00A575;
+	background: #00A575;
+	border: 1px solid #00A575;
+}
+#eastlondon .lineColour {
+	color: #F2AD41;
+	background: #F2AD41;
+	border: 1px solid #F2AD41;
+}
+#hammersmithandcity .lineColour {
+	color: #E899A8;
+	background: #E899A8;
+	border: 1px solid #E899A8;
+}
+#jubilee .lineColour {
+	color: #8F989E;
+	background: #8F989E;
+	border: 1px solid #8F989E;
+}
+#metropolitan .lineColour {
+	color: #893267;
+	background: #893267;
+	border: 1px solid #893267;
+}
+#northern .lineColour {
+	color: #000000;
+	background: #000000;
+	border: 1px solid #808080;
+}
+#piccadilly .lineColour {
+	color: #0450A1;
+	background: #0450A1;
+	border: 1px solid #0450A1;
+}
+#victoria .lineColour {
+	color: #009FE0;
+	background: #009FE0;
+	border: 1px solid #009FE0;
+}
+#waterlooandcity .lineColour {
+	color: #70C3CE;
+	background: #70C3CE;
+	border: 1px solid #70C3CE;
+}
+#dlr .lineColour {
+  color: #00bbb4;
+	background: #00bbb4 url(../images/overground.png) repeat-x 0px 2px;
+	border: 1px solid #00bbb4;
+}
+#overground .lineColour {
+  color: #f86c00;
+	background: #f86c00 url(../images/overground.png) repeat-x 0px 2px;
+	border: 1px solid #f86c00;
+}
+
+/* === FLY OUT === */
+.bakerloo {
+	background: #AE6118;
+	border: 1px solid #AE6118;
+}
+.central {
+	background: #E41F1F;
+	border: 1px solid #E41F1F;
+}
+.circle {
+	background: #F8D42D;
+	border: 1px solid #F8D42D;
+}
+.district {
+	background: #00A575;
+	border: 1px solid #00A575;
+}
+.eastlondon {
+	background: #F2AD41;
+	border: 1px solid #F2AD41;
+}
+.hammersmithandcity {
+	background: #E899A8;
+	border: 1px solid #E899A8;
+}
+.jubilee {
+	background: #8F989E;
+	border: 1px solid #8F989E;
+}
+.metropolitan {
+	background: #893267;
+	border: 1px solid #893267;
+}
+.northern {
+	background: #000000;
+	border: 1px solid #000000;
+}
+.piccadilly {
+	background: #0450A1;
+	border: 1px solid #0450A1;
+}
+.victoria {
+	background: #009FE0;
+	border: 1px solid #009FE0;
+}
+.waterlooandcity {
+	background: #70C3CE;
+	border: 1px solid #70C3CE;
+}
+.dlr {
+	background: #00bbb4;
+	border: 1px solid #00bbb4;
+}
+.overground {
+	background: #f86c00;
+	border: 1px solid #f86c00;
+}
+
+
+
+
+
+
+#info {
+	color: #fff;
+	position: absolute;
+	overflow: auto;
+	background: black;
+	padding: 0.5em;
+	border: 1px solid gray;
+}
+body.docked #info {
+	left: 20px;
+	top: 38px;
+	width: 98px;
+	height: 160px;
+}
+body.undocked #info {
+	left: 20px;
+	top: 38px;
+	width: 186px;
+	height: 160px;
+}
+#info h2 {
+	color: #000;
+	background: #ffa800;
+}
+#info ul {
+	margin: 0 0 0 2em;
+}
+#info a {
+	color: #ffa800;
+}
+#info a:hover {
+	color: #fff;
+}
+
+
+
+
+
+
+
+
+
+body #debug {
+	/*visibility: hidden;
+	visibility: visible;*/
+}
+/*body:hover #debug {
+	visibility: visible;
+}
+*/
+
+#debug {
+	white-space: pre;
+	font-family: 'Consolas';
+	color: silver;
+	background: black;
+	border: 1px solid grey;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 110px;
+	height: 200px;
+	overflow: auto;
+	z-index: 5000;
+}
+
+body.undocked #debug {
+	width: 200px;
+}

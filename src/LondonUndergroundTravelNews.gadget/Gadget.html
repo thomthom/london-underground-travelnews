@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB" lang="en-GB">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	<title>London Underground Live Travelnews</title>
+	<link href="css/Gadget.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" language="javascript" src="js/common.js"></script>
+	<script type="text/javascript" language="javascript" src="js/ui.js"></script>
+	<script type="text/javascript" language="javascript" src="js/updater.js"></script>
+	<script type="text/javascript" language="javascript" src="js/tubedata.js"></script>
+	<script type="text/javascript" language="javascript" src="js/gadget.js"></script>
+	<script type="text/javascript" language="javascript" src="js/debug.js"></script>
+</head>
+<body onload="init()">
+	<g:background id="imgBg" />
+	<ul id="tubelines">
+		<li id="bakerloo" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Bakerloo</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="central" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Central</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="circle" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Circle</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="district" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">District</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="hammersmithandcity" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">H'smith &amp; City</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="jubilee" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Jubilee</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="metropolitan" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Metropolitan</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="northern" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Northern</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="piccadilly" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Piccadilly</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="victoria" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Victoria</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="waterlooandcity" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Waterloo &amp; City</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+		<li id="dlr" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">DLR</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+   <li id="overground" onclick="showFlyout(this);">
+			<div class="lineColour">#</div>
+			<div class="lineName">Overground</div>
+			<div class="lineStatus">n/a</div>
+			<div class="lineDetails">No further information.</div>
+			<div class="timestamp">--:--</div>
+		</li>
+	</ul>
+	<div id="refreshData" title="Click to refresh data" onclick="refreshTubeinfo()">
+		<img src="images/Reload_Normal.png" width="15" height="15" onmouseover="this.src='images/Reload_Hover.png';" onmouseout="this.src='images/Reload_Normal.png';" />
+	</div>
+	<div id="statusBar">
+		Updated: --:-- --/--
+	</div>
+	<div id="messagebox"><div id="msgContainer" /></div>
+</body>
+</html>

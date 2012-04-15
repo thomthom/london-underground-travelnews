@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB" lang="en-GB">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	<title>Settings</title>
+	<style>
+		body {
+			width: 280px;
+			height: 350px;
+			overflow: hidden;
+		}
+		label
+		{
+			display: block;
+		}
+		fieldset
+		{
+			width: 250px;
+		}
+		#version
+		{
+			padding-top: 1.5em;
+			padding-right: 2em;
+			font-size: smaller;
+			text-align: right;
+		}
+	</style>
+	<script type="text/javascript" language="javascript" src="js/settings.js"></script>
+</head>
+<body onload="init()">
+	<fieldset>
+		<legend>General Settings</legend>
+
+		<input type="text" id="interval" style="width: 2em;" value="15">
+		Minutes update interval
+	</fieldset>
+	<fieldset>
+		<legend>Lines to Display</legend>
+
+		<label><input type="checkbox" id="bakerloo" checked="checked">Bakerloo</label>
+		<label><input type="checkbox" id="central" checked="checked">Central</label>
+		<label><input type="checkbox" id="circle" checked="checked">Circle</label>
+		<label><input type="checkbox" id="district" checked="checked">District</label>
+		<label><input type="checkbox" id="hammersmithandcity" checked="checked">Hammersmith & City</label>
+		<label><input type="checkbox" id="jubilee" checked="checked">Jubilee</label>
+		<label><input type="checkbox" id="metropolitan" checked="checked">Metropolitan</label>
+		<label><input type="checkbox" id="northern" checked="checked">Northern</label>
+		<label><input type="checkbox" id="piccadilly" checked="checked">Piccadilly</label>
+		<label><input type="checkbox" id="victoria" checked="checked">Victoria</label>
+		<label><input type="checkbox" id="waterlooandcity" checked="checked">Waterloo & City</label>
+		<label><input type="checkbox" id="dlr" checked="checked">DLR</label>
+		<label><input type="checkbox" id="overground" checked="checked">Overground</label>
+	</fieldset>
+	<!--
+	<br />
+	<div>
+		<input type="checkbox" id="blinkStatus" checked="checked">Flash line status
+	</div>
+	-->
+	<div id="version">Version: 0.0.0</div>
+</body>
+</html>
