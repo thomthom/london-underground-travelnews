@@ -42,14 +42,17 @@ function undockGadget()
 	document.body.style.width = WIDTH_UNDOCKED + 'px';
 
 	// Set up gadget background
-	imgBg.src = 'url(images/windowExWideMain2.png)';
-	imgBg.style.width = WIDTH_UNDOCKED + 'px';
+  if ( IS_GADGET )
+  {
+    imgBg.src = 'url(images/windowExWideMain2.png)';
+    imgBg.style.width = WIDTH_UNDOCKED + 'px';
 
-	bgBody.src = 'url(images/windowExWideMain_body.png)';
-	bgBody.width = WIDTH_UNDOCKED;
+    bgBody.src = 'url(images/windowExWideMain_body.png)';
+    bgBody.width = WIDTH_UNDOCKED;
 
-	bgFoot.src = 'url(images/windowExWideMain_footer.png)';
-	bgFoot.width = WIDTH_UNDOCKED;
+    bgFoot.src = 'url(images/windowExWideMain_footer.png)';
+    bgFoot.width = WIDTH_UNDOCKED;
+  }
 
 	// Make sure that all .lineName and .lineStatus elements are visible as
 	// they will alternate when in docked mode.
@@ -223,7 +226,7 @@ function resetScreen()
 			lineDetail = lineInfo[4];
 
 			// Set properties
-			if (System.Gadget.docked)
+			if ( IS_GADGET && System.Gadget.docked )
 			{
 				lineName.style.display = 'inline';
 				lineStatus.style.display = 'none';

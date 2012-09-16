@@ -2,7 +2,7 @@
 <gadget>
 	<name>London Underground Live Travelnews</name>
 	<namespace>thomthom.net</namespace>
-	<version>1.5.0</version>
+	<version>1.5.1</version>
 	<author name="Thomas Thomassen">
 		<info url="http://www.thomthom.net/blog/2008/04/lult-sidebar-changelog/" />
 		<logo src="images/thomthom.png" />

@@ -83,7 +83,7 @@ function parseData( cache )
     return;
   }
   // Get lines
-  var lines_data = data[1].match(/<li\s+class="(?:\w+\s+)*ltn-line(?:\w+\s+)*">([\s\S]*?)<\/li>/gi);
+  var lines_data = data[1].match(/<li\s+(?:\S+\s+)?class="(?:\w+\s+)*ltn-line(?:\w+\s+)*">([\s\S]*?)<\/li>/gi);
   if (lines_data == null)
   {
     MessageBox.show('Error! Could not extract lines.');
@@ -92,7 +92,7 @@ function parseData( cache )
   resetScreen(); // Clear old data
   for (i = 0; i < lines_data.length; i++)
   {
-    line_data = lines_data[i].match(/<li\s+class="(?:\w+\s+)*ltn-line(?:\s+\w+\s*)*">\s*<h3\s+class="(\w+)[\s\w-]+">([\s\S]+?)<\/h3>([\s\S]*?)<\/li>/i);
+    line_data = lines_data[i].match(/<li\s+(?:\S+\s+)?class="(?:\w+\s+)*ltn-line(?:\s+\w+\s*)*">\s*<h3\s+class="(\w+)[\s\w-]+">([\s\S]+?)<\/h3>([\s\S]*?)<\/li>/i);
     if (line_data == null)
     {
       // Could not extract line data - try to ignore and read the rest
@@ -189,7 +189,7 @@ function parseData( cache )
   
   retry_network_connection = true; // Reset flag
   
-  if (System.Gadget.docked)
+  if ( IS_GADGET && System.Gadget.docked )
   {
     TimerDisplay.start();
   }

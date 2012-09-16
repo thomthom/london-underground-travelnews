@@ -25,10 +25,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 // CONSTANTS
 ////////////////////////////////////////////////////////////////////////////////
-var VERSION = System.Gadget.version.split('.');
-var V_MAJOR = parseInt( VERSION[0] );
-var V_MINOR = parseInt( VERSION[1] );
-var V_REVIS = parseInt( VERSION[2] );
+IS_GADGET = ( typeof System !== 'undefined' );
+
+if ( IS_GADGET )
+{
+  var VERSION = System.Gadget.version.split('.');
+  var V_MAJOR = parseInt( VERSION[0] );
+  var V_MINOR = parseInt( VERSION[1] );
+  var V_REVIS = parseInt( VERSION[2] );  
+} else {
+  // Debug version
+  var V_MAJOR = 9;
+  var V_MINOR = 9;
+  var V_REVIS = 9;
+}
 
 var PROG_ID = 'LULT_WS';
 
@@ -97,24 +107,43 @@ function init()
 		height = FULL_HEIGHT + 'px'; //'238px'; // 15*12=180 -- 238-180=58
 	}
 	imgBg.src = 'url(images/windowMain2.png)';
-	bgBody = imgBg.addImageObject('url(images/windowMain_body.png)', 0, 40);
-	bgFoot = imgBg.addImageObject('url(images/windowMain_footer.png)', 0, 210);
+  if ( IS_GADGET )
+  {
+    bgBody = imgBg.addImageObject('url(images/windowMain_body.png)', 0, 40);
+    bgFoot = imgBg.addImageObject('url(images/windowMain_footer.png)', 0, 210);
+  }
+  else
+  {
+    undockGadget();
+    document.body.style.background = '#000';
+    document.body.style.marginLeft = 'auto';
+    document.body.style.marginRight = 'auto';
+  }
 
 	///// Configure Gadget /////////////////////////////////////////////////////
-	System.Gadget.settingsUI = "Settings.html";
-	System.Gadget.onSettingsClosed = SettingsClosed;
+  if ( IS_GADGET )
+  {
+    System.Gadget.settingsUI = "Settings.html";
+    System.Gadget.onSettingsClosed = SettingsClosed;
 
-	System.Gadget.Flyout.file = "Flyout.html";
+    System.Gadget.Flyout.file = "Flyout.html";
 
-	System.Gadget.onUndock = undockGadget;
-	System.Gadget.onDock = dockGadget;
+    System.Gadget.onUndock = undockGadget;
+    System.Gadget.onDock = dockGadget;
+  }
 
 	///// Load settings ////////////////////////////////////////////////////////
-	readSettings();
+  if ( IS_GADGET )
+  {
+    readSettings();
+  }
 
 	///// Initialise ///////////////////////////////////////////////////////////
 	refreshTubeinfo();
-	updateCheck();
+  if ( IS_GADGET )
+  {
+    updateCheck();
+  }
 	//messageBox('Hello World', null);
 	//MessageBox.show('Hello World', null);
 }
