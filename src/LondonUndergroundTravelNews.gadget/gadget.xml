@@ -2,12 +2,12 @@
 <gadget>
 	<name>London Underground Live Travelnews</name>
 	<namespace>thomthom.net</namespace>
-	<version>1.5.1</version>
+	<version>1.5.2</version>
 	<author name="Thomas Thomassen">
-		<info url="http://www.thomthom.net/blog/2008/04/lult-sidebar-changelog/" />
+		<info url="http://www.thomthom.net/thoughts/2012/04/london-underground-live-travelnews/" />
 		<logo src="images/thomthom.png" />
 	</author>
-	<copyright>© 2007–2012</copyright>
+	<copyright>© 2007–2013</copyright>
 	<description>Display live travelnews for the London Underground. This is gadget is NOT an offical gadget made by Transport For London, so do not ask them for support.</description>
 	<icons>
 		<icon width="64" height="64" src="images/Icon.png" />
