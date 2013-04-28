@@ -150,6 +150,7 @@ function parseData( cache )
         case 'planned closure':
         case 'disrupted':
         case 'special service':
+        case 'service closed':
           if (DOM_tubeline.className != 'error')
           {
             DOM_tubeline.className = 'severe';
