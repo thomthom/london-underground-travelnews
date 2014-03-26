@@ -14,7 +14,7 @@ function refreshTubeinfo()
     MessageBox.show( 'Error! Cannot create an XMLHTTP instance.' );
     return false;
   }
-  status( 'Loading data...' ); // (!) Display small animation in statusbar
+  update_status( 'Loading data...' ); // (!) Display small animation in statusbar
   ///// Response function //////////////////////////////////////////////////////
   http_request.onreadystatechange = function()
   {
@@ -24,13 +24,12 @@ function refreshTubeinfo()
       {
       case 200:
         // Success. Parse data.
-        parseData( http_request.responseText );
-        parseData( http_request.responseText );
+        parseData( http_request.responseXML );
         break;
       case 12007:
         // ERROR_WINHTTP_NAME_NOT_RESOLVED
         // http://msdn.microsoft.com/en-us/library/aa383770%28VS.85%29.aspx
-        // 
+        //
         // If the network is not connected this can be returned.
         // When a computer resumes from sleep it appear that the network isn't
         // ready when the gadget resumes and therefor this error is raised.
@@ -39,7 +38,7 @@ function refreshTubeinfo()
         // data.
         if ( retry_network_connection )
         {
-          status( 'Waiting for network...' );
+          update_status( 'Waiting for network...' );
           var seconds = 30;
           timerRefresh = setTimeout( refreshTubeinfo, 1000 * seconds );
           break;
@@ -48,7 +47,7 @@ function refreshTubeinfo()
       default:
         // Failure. Display error information.
         var strMsg  = 'Error loading data.<br/>HTTP Error: ' + http_request.status;
-        status( 'Error loading data.' );
+        update_status( 'Error loading data.' );
         MessageBox.show( strMsg, MSG_DATAERROR );
       }
     }
@@ -62,134 +61,124 @@ function refreshTubeinfo()
 }
 
 
-function parseData( cache )
+function get_DOM_element_by_line_id(line_id)
 {
-  // Set status
-  status( 'Parsing...' );
+  // Ideally the gadget would dynamically resize itself to the data given by the
+  // feed. But in this emergency patch I simply map the ID's of the line to the
+  // old HTML DOM ids.
+  var map = {
+    "1" : "bakerloo",
+    "2" : "central",
+    "7" : "circle",
+    "9" : "district",
+    "8" : "hammersmithandcity",
+    "4" : "jubilee",
+    "11" : "metropolitan",
+    "5" : "northern",
+    "6" : "piccadilly",
+    "3" : "victoria",
+    "12" : "waterlooandcity",
+    "81" : "dlr",
+    "82" : "overground"
+  };
+  var verbose_line_id = map[line_id];
+  return document.getElementById(verbose_line_id);
+}
 
-  // Errorcheck
-  if ( cache.length == 0 )
+
+function get_status_weight(status)
+{
+  // Rank per TFL guidelines of significance.
+  var map = {
+    "suspended"        : 8,
+    "part suspended"   : 7,
+    "planned closure"  : 6,
+    "part closure"     : 5,
+    "severe delays"    : 4,
+    "reduced services" : 3,
+    "bus service"      : 2,
+    "minor delays"     : 1,
+    "good_service"     : 0
+  };
+  return map[status.toLowerCase()];
+}
+
+
+function get_most_significant_status(statuses)
+{
+  var sorted = statuses.sort(function(a, b)
   {
-    MessageBox.show( 'Error! No data.', MSG_DATAERROR );
+    return get_status_weight(b) - map(a);
+  });
+  return sorted[0];
+}
+
+
+function get_status_class(status)
+{
+  var weight = get_status_weight(status);
+  if (weight > 3)
+  {
+    return 'severe';
+  }
+  else if (weight > 0)
+  {
+    return 'minor';
+  }
+  return 'normal';
+}
+
+
+function parseData( xml_doc )
+{
+  update_status( 'Parsing...' );
+
+  if ( xml_doc === null )
+  {
+    MessageBox.show( 'Error! No XML document.', MSG_DATAERROR );
     return;
   }
 
-  ////////////////////////////////////////////////////////////////////////////
-  // Get data chuck containing the travel news
-  var data = cache.match(/<ul(?:\s\S+)*?\sid="lines"[\s\S]*?>([\s\S]*?)<\/ul>/i);
-  if ( data == null )
+  var lines = xml_doc.getElementsByTagName('LineStatus');
+  if ( lines.length == 0 )
   {
-    MessageBox.show('Error! Could not locate tube data.');
+    MessageBox.show('Error! No line data.');
     return;
   }
-  // Get lines
-  var lines_data = data[1].match(/<li\s+(?:\S+\s+)?class="(?:\w+\s+)*ltn-line(?:\w+\s+)*">([\s\S]*?)<\/li>/gi);
-  if (lines_data == null)
-  {
-    MessageBox.show('Error! Could not extract lines.');
-    return;
-  }
+
   resetScreen(); // Clear old data
-  for (i = 0; i < lines_data.length; i++)
+  for (var i = 0; i < lines.length; ++i)
   {
-    line_data = lines_data[i].match(/<li\s+(?:\S+\s+)?class="(?:\w+\s+)*ltn-line(?:\s+\w+\s*)*">\s*<h3\s+class="(\w+)[\s\w-]+">([\s\S]+?)<\/h3>([\s\S]*?)<\/li>/i);
-    if (line_data == null)
-    {
-      // Could not extract line data - try to ignore and read the rest
-      continue;
-    }
-    lineClass = line_data[1];
-    lineName = line_data[2];
-    lineStatus = line_data[3]; // not really line status
-    DOM_tubeline = document.getElementById(lineClass);
-    
-    // Extract status and messages
-    lineData = lineStatus.match(/<div\s+class="(?:\w+\s+)*status(?:\s+\w+\s*)*">([\s\S]*)<\/div>/i);
-    if (lineData == null)
-    {
-      // could not get status - report error as status
-      continue;
-    }
-    statusData = lineData[1];
-    
-    // Check for elements with class 'ltn-title' - that indicate that there is
-    // a message present. If not - then assume it [statusData] only contains
-    // the status title.
-    tmpData = statusData.match(/<\w+\s+class="ltn-title">([\s\S]+?)<\//i);
-    if (tmpData == null)
-    {
-      // Good Service
-      lineStatus = statusData;
-    }
-    else
-    {
-      // Problem
-      lineStatus = tmpData[1];
-      lineMessage = statusData.match(/<div\s+class="message">([\s\S]+)<\/div>/i);
-      if (lineMessage != null)
-      {
-        message = lineMessage[1].replace(/<dl\s+class="linklist">[\s\S]*<\/dl>/i, '');
-        DOM_tubeline.getElementsByTagName('div')[3].innerHTML = message;
-      }
-    }
-    // Update status
-    DOM_tubeline.title = lineName + ': ' + lineStatus;
-    DOM_status = DOM_tubeline.getElementsByTagName('div')[2];
-    // A line might have mulitple statuses. Pick out the most severe and display
-    // that one.
-    statuses = lineStatus.split(/,[\s]*/);
-    status(lineName);
-    for (j = 0; j < statuses.length; j++)
-    {
-      thisStatus = statuses[j];
-      // Highlight as required
-      switch (thisStatus.toLowerCase())
-      {
-        case 'severe delays':
-        case 'suspended':
-        case 'planned closure':
-        case 'disrupted':
-        case 'special service':
-        case 'service closed':
-          if (DOM_tubeline.className != 'error')
-          {
-            DOM_tubeline.className = 'severe';
-            compactStatus = thisStatus;
-            break;
-          }
-        case 'part suspended':
-        case 'part closure':
-        case 'minor delays':
-        case 'bus service':
-          if (DOM_tubeline.className == 'normal')
-          {
-            DOM_tubeline.className = 'minor';
-            compactStatus = thisStatus;
-          }
-          break;
-        case 'good service':
-          DOM_tubeline.className = 'normal';
-          compactStatus = thisStatus;
-          break;
-        default:
-          DOM_tubeline.className = 'error';
-          compactStatus = 'Error';
-          //compactStatus = thisStatus;
-          break;
-      }
-    }
-    DOM_status.innerHTML = compactStatus;
-  } // end for
+    var line_status = lines[i];
+    var line = line_status.getElementsByTagName("Line")[0];
+    var line_id = line.getAttribute('ID');
+    var line_name = line.getAttribute('Name');
+    var status = line_status.getElementsByTagName("Status")[0];
+    var status_details = line_status.getAttribute('StatusDetails');
+    var status_description = status.getAttribute('Description');
+
+    // Get HTML DOM elements from the gadget UI.
+    var dom_line = get_DOM_element_by_line_id(line_id);
+    var dom_status = dom_line.getElementsByTagName('div')[2];
+    var dom_details = dom_line.getElementsByTagName('div')[3];
+
+    // Update the UI with the new data.
+    dom_line.title = line_name + ': ' + status_description;
+    dom_line.className = get_status_class(status_description);
+    dom_status.innerHTML = status_description;
+    dom_details.innerHTML = status_details;
+  }
+
   // Format timestamp and update status
   var d = new Date();
   var hours   = String.fill(d.getHours().toString(),     '0', 2);
   var minutes = String.fill(d.getMinutes().toString(),   '0', 2);
   var date    = String.fill(d.getDate().toString(),      '0', 2);
   var month   = String.fill((d.getMonth()+1).toString(), '0', 2);
-  status('Updated: ' + hours + ':' + minutes + ' ' + date + '/' + month);
-  
+  update_status('Updated: ' + hours + ':' + minutes + ' ' + date + '/' + month);
+
   retry_network_connection = true; // Reset flag
-  
+
   if ( IS_GADGET && System.Gadget.docked )
   {
     TimerDisplay.start();

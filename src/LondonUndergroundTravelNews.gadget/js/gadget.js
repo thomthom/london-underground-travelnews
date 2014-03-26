@@ -11,7 +11,6 @@
  * 5. Ensure message box text is scrollable.
  *
  * MAYBE:
- * ~ Add DLR (Maybe separate gadget?)
  * ~ Add new flyout displaying line map graphics
  * ~ Statusbar history
  *
@@ -32,7 +31,7 @@ if ( IS_GADGET )
   var VERSION = System.Gadget.version.split('.');
   var V_MAJOR = parseInt( VERSION[0] );
   var V_MINOR = parseInt( VERSION[1] );
-  var V_REVIS = parseInt( VERSION[2] );  
+  var V_REVIS = parseInt( VERSION[2] );
 } else {
   // Debug version
   var V_MAJOR = 9;
@@ -51,8 +50,7 @@ var FULL_HEIGHT = 253; // 15 per line
 var WIDTH_DOCKED  = 141;
 var WIDTH_UNDOCKED  = 230;
 
-var DATA_SOURCE = 'http://www.tfl.gov.uk/tfl/livetravelnews/realtime/tube/default.html';
-//var DATA_SOURCE = 'http://www.tfl2.gov.uk/tfl/livetravelnews/realtime/tube/default.html'; // Bogus URL for debugging
+var DATA_SOURCE = 'http://cloud.tfl.gov.uk/TrackerNet/LineStatus';
 
 var LINES = new Array(
 	'bakerloo',
@@ -78,7 +76,7 @@ var MSG_DATAERROR = 1;
 ////////////////////////////////////////////////////////////////////////////////
 
 // Data update interval in minutes
-var interval = 15;
+var interval = 1;
 
 // Boolean controlling if the name and status needs to be alternated when gadget
 // is docked.
