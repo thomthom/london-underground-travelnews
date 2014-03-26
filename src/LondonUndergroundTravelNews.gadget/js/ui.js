@@ -215,7 +215,7 @@ function resetScreen()
 			lineDetail = lineInfo[3];
 			lineTimestamp = lineInfo[4];
 			*/
-      
+
       tubeline.className = 'normal';
 
 			lineInfo = tubeline.getElementsByTagName('div');
@@ -244,7 +244,7 @@ function resetScreen()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-function status(str)
+function update_status(str)
 {
 	var statusBar = document.getElementById('statusBar');
 	statusBar.innerHTML = str;

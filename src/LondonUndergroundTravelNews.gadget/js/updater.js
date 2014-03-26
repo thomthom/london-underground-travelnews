@@ -5,7 +5,7 @@
 		var http_request = new XMLHttpRequest(); // IE7 http request
 		// Error handle
 		if (!http_request) {
-			status('ERROR: new XMLHttpRequest()');
+			update_status('ERROR: new XMLHttpRequest()');
 	        return false;
 	    }
 		http_request.onreadystatechange = function() { updateHttp(http_request); };
@@ -15,7 +15,7 @@
 	}
 	catch(e)
 	{
-		status(e.description);
+		update_status(e.description);
 	}
 }
 function updateHttp(http_request)
@@ -44,7 +44,7 @@ function updateHttp(http_request)
 					}
 				}
 				if (!application) {
-					status('Could not find update data.');
+					update_status('Could not find update data.');
 					return;
 				}
 
@@ -85,13 +85,13 @@ function updateHttp(http_request)
 				info += '<p><a href="javascript:MessageBox.close();">Update Later</a></p>';
 				// OUtput HTML message
 				MessageBox.show(info, MSG_DEFAULT);
-				status('<a href="javascript:MessageBox.reopen();">Update Availible!</a>');
+				update_status('<a href="javascript:MessageBox.reopen();">Update Availible!</a>');
 			}
 		}
 	}
 	catch(e)
 	{
-		status(e.description);
+		update_status(e.description);
 	}
 }
 function closeInfo() {
