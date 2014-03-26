@@ -1,0 +1,4 @@
+syntax: glob
+archive/*
+errors/*
+samples/*
