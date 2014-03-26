@@ -251,9 +251,9 @@ body.undocked .lineName {
 	border: 1px solid #F8D42D;
 }
 #district .lineColour {
-	color: #00A575;
-	background: #00A575;
-	border: 1px solid #00A575;
+	color: #007229;
+	background: #007229;
+	border: 1px solid #007229;
 }
 #eastlondon .lineColour {
 	color: #F2AD41;
@@ -266,9 +266,9 @@ body.undocked .lineName {
 	border: 1px solid #E899A8;
 }
 #jubilee .lineColour {
-	color: #8F989E;
-	background: #8F989E;
-	border: 1px solid #8F989E;
+	color: #686E72;
+	background: #686E72;
+	border: 1px solid #686E72;
 }
 #metropolitan .lineColour {
 	color: #893267;
@@ -320,8 +320,8 @@ body.undocked .lineName {
 	border: 1px solid #F8D42D;
 }
 .district {
-	background: #00A575;
-	border: 1px solid #00A575;
+	background: #007229;
+	border: 1px solid #007229;
 }
 .eastlondon {
 	background: #F2AD41;
@@ -332,8 +332,8 @@ body.undocked .lineName {
 	border: 1px solid #E899A8;
 }
 .jubilee {
-	background: #8F989E;
-	border: 1px solid #8F989E;
+	background: #686E72;
+	border: 1px solid #686E72;
 }
 .metropolitan {
 	background: #893267;
@@ -356,12 +356,12 @@ body.undocked .lineName {
 	border: 1px solid #70C3CE;
 }
 .dlr {
-	background: #00bbb4;
-	border: 1px solid #00bbb4;
+	background: #00BBB4;
+	border: 1px solid #00BBB4;
 }
 .overground {
-	background: #f86c00;
-	border: 1px solid #f86c00;
+	background: #F86C00;
+	border: 1px solid #F86C00;
 }
 
 
